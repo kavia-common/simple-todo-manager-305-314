@@ -13,13 +13,11 @@ const STORAGE_KEY = "todo_manager.todos.v1"; // namespaced, clear v1 key
 
 /**
  * Load todos from localStorage, migrating if necessary.
- * - Reads from STORAGE_KEY.
- * - If nothing under new key, but old key exists, migrates old to new and removes old key.
+ * Reads from STORAGE_KEY.
+ * If nothing under new key, but old key exists, migrates old to new and removes old key.
  * @returns {Array} List of todos
  */
-// PUBLIC_INTERFACE
 function loadTodos() {
-  // 1. Try to read from new key first
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
     if (raw) {
@@ -27,17 +25,14 @@ function loadTodos() {
     }
   } catch (err) {}
 
-  // 2. Nothing under new key: check for legacy key
   try {
     const rawOld = localStorage.getItem(STORAGE_KEY_OLD);
     if (rawOld) {
-      // Migrate: save to new key, remove old key
       localStorage.setItem(STORAGE_KEY, rawOld);
       localStorage.removeItem(STORAGE_KEY_OLD);
       return JSON.parse(rawOld);
     }
   } catch (err) {}
-  // 3. Default to empty
   return [];
 }
 
@@ -45,12 +40,10 @@ function loadTodos() {
  * Save all todos to localStorage (always uses new key).
  * @param {Array} todos
  */
-// PUBLIC_INTERFACE
 function saveTodos(todos) {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(todos));
 }
 
-// PUBLIC_INTERFACE
 function App() {
   const [todos, setTodos] = useState(() => loadTodos());
   const [theme] = useState("light"); // fixed light theme: #3b82f6/#06b6d4 accents
@@ -63,7 +56,6 @@ function App() {
     saveTodos(todos);
   }, [todos]);
 
-  // PUBLIC_INTERFACE
   const addTodo = (text) => {
     const next = [
       ...todos,
@@ -72,12 +64,10 @@ function App() {
     setTodos(next);
   };
 
-  // PUBLIC_INTERFACE
   const deleteTodo = (id) => {
     setTodos(todos.filter(t => t.id !== id));
   };
 
-  // PUBLIC_INTERFACE
   const toggleTodo = (id) => {
     setTodos(
       todos.map(t =>
@@ -86,7 +76,6 @@ function App() {
     );
   };
 
-  // PUBLIC_INTERFACE
   const editTodo = (id, newText) => {
     setTodos(
       todos.map(t =>
@@ -116,4 +105,5 @@ function App() {
   );
 }
 
+// Only default export required by React entry. Nothing else is exported or assigned globally.
 export default App;
