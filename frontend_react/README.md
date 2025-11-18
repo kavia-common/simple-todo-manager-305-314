@@ -1,82 +1,50 @@
-# Lightweight React Template for KAVIA
+# Todo Manager App
 
-This project provides a minimal React template with a clean, modern UI and minimal dependencies.
+A modern, minimal single-page React application for managing todos.
 
 ## Features
 
-- **Lightweight**: No heavy UI frameworks - uses only vanilla CSS and React
-- **Modern UI**: Clean, responsive design with KAVIA brand styling
-- **Fast**: Minimal dependencies for quick loading times
-- **Simple**: Easy to understand and modify
+- **Add** new todos with input and save
+- **Edit** todos inline and save/cancel
+- **Delete** todos instantly
+- **Toggle-complete** todos with a checkbox
+- **Persist** todos across refresh using localStorage
+- Modern and responsive UI with light theme, #3b82f6 (primary) and #06b6d4 (success) color accents
+- No backend required
 
-## Getting Started
+## Usage
 
-In the project directory, you can run:
+1. Clone the repository or copy the `frontend_react` folder to your React workspace.
+2. In the directory, run:
 
-### `npm start`
+   ```
+   npm install
+   npm start
+   ```
 
-Runs the app in development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+3. Visit [http://localhost:3000](http://localhost:3000) in your browser.
 
-### `npm test`
+## Project Structure Highlights
 
-Launches the test runner in interactive watch mode.
+- Components: `src/components/`
+  - `Header.jsx` - App header
+  - `TodoInput.jsx` - Input for add/edit todos
+  - `TodoList.jsx` - List of todos
+  - `TodoItem.jsx` - Single todo item
+- Styling: `src/styles.css` with theme tokens (#3b82f6, #06b6d4, etc.)
 
-### `npm run build`
+## Styling & Theme
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- Primary: #3b82f6
+- Success: #06b6d4
+- Secondary: #64748b
+- Error: hsl(0 84% 60%)
+- Modern, accessible design, responsive to mobile
 
-## Customization
+## Environment
 
-### Colors
+Runs fully client-side—no backend is needed or used.
 
-The main brand colors are defined as CSS variables in `src/App.css`:
+## License
 
-```css
-:root {
-  --kavia-orange: #E87A41;
-  --kavia-dark: #1A1A1A;
-  --text-color: #ffffff;
-  --text-secondary: rgba(255, 255, 255, 0.7);
-  --border-color: rgba(255, 255, 255, 0.1);
-}
-```
-
-### Components
-
-This template uses pure HTML/CSS components instead of a UI framework. You can find component styles in `src/App.css`. 
-
-Common components include:
-- Buttons (`.btn`, `.btn-large`)
-- Container (`.container`)
-- Navigation (`.navbar`)
-- Typography (`.title`, `.subtitle`, `.description`)
-
-## Learn More
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+MIT

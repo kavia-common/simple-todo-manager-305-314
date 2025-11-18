@@ -1,47 +1,86 @@
-import React, { useState, useEffect } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useEffect } from "react";
+import Header from "./components/Header";
+import TodoInput from "./components/TodoInput";
+import TodoList from "./components/TodoList";
+import "./App.css";
+
+// Color tokens: #3b82f6 (primary), #06b6d4 (success), #64748b (secondary), hsl(0 84% 60%) (error)
+const STORAGE_KEY = "todos_v1";
+
+function loadTodos() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (raw) return JSON.parse(raw);
+  } catch {}
+  return [];
+}
+
+function saveTodos(todos) {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(todos));
+}
 
 // PUBLIC_INTERFACE
 function App() {
-  const [theme, setTheme] = useState('light');
+  const [todos, setTodos] = useState(() => loadTodos());
+  const [theme] = useState("light"); // fixed light theme: #3b82f6/#06b6d4 accents
 
-  // Effect to apply theme to document element
   useEffect(() => {
-    document.documentElement.setAttribute('data-theme', theme);
+    document.documentElement.setAttribute("data-theme", theme);
   }, [theme]);
 
+  useEffect(() => {
+    saveTodos(todos);
+  }, [todos]);
+
   // PUBLIC_INTERFACE
-  const toggleTheme = () => {
-    setTheme(prevTheme => prevTheme === 'light' ? 'dark' : 'light');
+  const addTodo = (text) => {
+    const next = [
+      ...todos,
+      { id: Date.now(), text, completed: false }
+    ];
+    setTodos(next);
+  };
+
+  // PUBLIC_INTERFACE
+  const deleteTodo = (id) => {
+    setTodos(todos.filter(t => t.id !== id));
+  };
+
+  // PUBLIC_INTERFACE
+  const toggleTodo = (id) => {
+    setTodos(
+      todos.map(t =>
+        t.id === id ? { ...t, completed: !t.completed } : t
+      )
+    );
+  };
+
+  // PUBLIC_INTERFACE
+  const editTodo = (id, newText) => {
+    setTodos(
+      todos.map(t =>
+        t.id === id ? { ...t, text: newText } : t
+      )
+    );
   };
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <button 
-          className="theme-toggle" 
-          onClick={toggleTheme}
-          aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
-        >
-          {theme === 'light' ? '🌙 Dark' : '☀️ Light'}
-        </button>
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <p>
-          Current theme: <strong>{theme}</strong>
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="App todo-app-root">
+      <Header />
+      <main className="todo-main">
+        <TodoInput onAdd={addTodo} />
+        <TodoList
+          todos={todos}
+          onToggle={toggleTodo}
+          onDelete={deleteTodo}
+          onEdit={editTodo}
+        />
+      </main>
+      <footer className="todo-footer">
+        <span>
+          &copy; {new Date().getFullYear()} Todo Manager &ndash; All changes are saved locally.
+        </span>
+      </footer>
     </div>
   );
 }
